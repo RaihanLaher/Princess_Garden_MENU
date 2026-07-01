@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Princess Garden – Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-frame">
+    <div class="corner-br"></div>
+    <div class="corner-tr"></div>
+    <div class="corner-bl"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-menu">MENU</div>
+    <!-- Logo como background-image num DIV: sem opcao de download/partilha/copiar/pesquisa visual -->
+    <div class="hero-logo" role="img" aria-label="Princess Garden - Logo"></div>
+    <div class="hero-rule"></div>
+    <p class="hero-tagline">Special Food &amp; Restauração</p>
+    <button type="button" class="hero-btn" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
+      <span>Explorar Menu</span>
+    </button>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-hint-arrow"></div>
+  </div>
+</section>
+
+<!-- Barra de fotos -->
+<div class="strip">
+  <div class="strip-item">
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=75" alt="food" loading="lazy">
+    <div class="strip-item-label">Entradas</div>
+  </div>
+  <div class="strip-item">
+    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&q=75" alt="pizza" loading="lazy">
+    <div class="strip-item-label">Pizzas</div>
+  </div>
+  <div class="strip-item">
+    <img src="https://images.unsplash.com/photo-1559737558-2f5a35f4523b?w=500&q=75" alt="seafood" loading="lazy">
+    <div class="strip-item-label">Mariscos</div>
+  </div>
+  <div class="strip-item">
+    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&q=75" alt="chicken" loading="lazy">
+    <div class="strip-item-label">Frangos</div>
+  </div>
+  <div class="strip-item">
+    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=500&q=75" alt="steak" loading="lazy">
+    <div class="strip-item-label">Carnes</div>
+  </div>
+</div>
+
+<!--  MENU (gerado dinamicamente pelo script.js a partir de menuData)  -->
+<section class="menu-wrap" id="menu">
+  <div class="menu-header">
+    <p class="menu-eyebrow">Princess Garden</p>
+    <h2 class="menu-title">Menu</h2>
+  </div>
+
+  <nav class="tabs" id="tabsContainer"></nav>
+
+  <div id="panelsContainer"></div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-logo-line">
+      <span class="footer-brand">Princess Garden</span>
+      <span class="footer-dot">·</span>
+      <span class="footer-sub">Special Food &amp; Restauração</span>
+    </div>
+
+    <div class="footer-links">
+      <a class="footer-link" href="https://www.instagram.com/princess_garden_mz?igsh=MWhkbHo5d2pjZzhpYQ==" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        @princess_garden_mz
+      </a>
+      <a class="footer-link" href="https://maps.app.goo.gl/bXrfe4fCb1Awey359" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Chimoio, 7 de Abril — Zona do Bikha
+      </a>
+    </div>
+
+    <div class="footer-contacts">
+      <a class="footer-contact" href="tel:+258869918885">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        869 918 885
+      </a>
+      <span class="footer-sep">/</span>
+      <a class="footer-contact" href="tel:+258872776238">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        872 776 238
+      </a>
+    </div>
+
+    <p class="footer-copy">&copy; 2025 Princess Garden · Todos os direitos reservados · <a href="/host" id="hostLink" class="host-link">Host</a></p>
+  </div>
+</footer>
+
+<!-- ===== Modal de password do Host ===== -->
+<div class="host-overlay" id="hostOverlay">
+  <div class="host-box">
+    <button class="host-close-x" onclick="closeHostLogin()" aria-label="Fechar">✕</button>
+    <h3>Acesso Host</h3>
+    <p>Introduz a password para gerir o menu.</p>
+    <input type="password" id="hostPasswordInput" placeholder="Password" autocomplete="off">
+    <div class="host-error" id="hostError"></div>
+    <div class="host-btn-row">
+      <button class="btn-outline" onclick="closeHostLogin()">Cancelar</button>
+      <button class="btn-gold" id="hostLoginBtn" onclick="attemptHostLogin()">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Painel de administração do Host ===== -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel">
+    <div class="admin-header">
+      <h2>Painel do Host</h2>
+      <div class="admin-header-actions">
+        <span class="admin-save-note" id="adminSaveNote">Guardado ✓</span>
+        <button class="btn-small" onclick="addCategory()">+ Categoria</button>
+        <button class="btn-outline" onclick="exportMenuData()">Exportar dados</button>
+        <button class="btn-danger" onclick="lockHost()">Sair</button>
+      </div>
+    </div>
+
+    <div id="adminPanelBody"></div>
+
+    <div class="admin-footer-actions">
+      <div class="left">
+        <button class="btn-danger" onclick="resetMenuData()">Repor menu original</button>
+      </div>
+      <div class="right">
+        <button class="btn-gold" onclick="closeAdminPanel()">Fechar painel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
