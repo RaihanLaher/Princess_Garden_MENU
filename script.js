@@ -42,7 +42,7 @@ async function sha256Hex(text) {
 const defaultMenuData = [
   {
     id: "entradas", name: "Entradas",
-    banner: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=900&q=75",
+    banner: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=900&q=75",
     groups: [{ title: null, items: [
       { name: "Chamussas de Carne", price: "35,00 MT" },
       { name: "Chamussas de Galinha", price: "35,00 MT" },
