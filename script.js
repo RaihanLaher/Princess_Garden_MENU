@@ -180,8 +180,23 @@ function slugify(str) {
     .replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || uid();
 }
 
-/*Persistência */
-function loadMenuData() {
+/*Persistência — agora partilhada para todos os visitantes via /api/menu.
+  O localStorage passa a ser só uma cache de emergência (offline / API ainda
+  não configurada), nunca a fonte principal dos dados. */
+async function loadMenuData() {
+  try {
+    const res = await fetch("/api/menu");
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length) {
+        menuData = ensureIds(data);
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(menuData)); } catch (e) {}
+        return;
+      }
+    }
+  } catch (e) { /* sem rede, ou /api/menu ainda não configurado */ }
+
+  // Fallback: cache local ou dados por defeito
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
@@ -194,18 +209,31 @@ function loadMenuData() {
   } catch (e) { /* ignora e usa defaults */ }
   menuData = ensureIds(JSON.parse(JSON.stringify(defaultMenuData)));
 }
-function saveMenuData() {
+
+async function saveMenuData() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(menuData)); } catch (e) {}
+
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(menuData));
-    flashSaveNote();
+    const res = await fetch("/api/menu", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + (sessionAuthHash || "")
+      },
+      body: JSON.stringify(menuData)
+    });
+    if (!res.ok) throw new Error("save failed: " + res.status);
+    flashSaveNote("Guardado para todos ✓");
   } catch (e) {
-    console.error("Não foi possível guardar:", e);
+    console.error("Não foi possível guardar no servidor:", e);
+    flashSaveNote("Erro ao guardar no servidor ⚠", true);
   }
 }
-function flashSaveNote() {
+function flashSaveNote(text, isError) {
   const note = document.getElementById("adminSaveNote");
   if (!note) return;
-  note.textContent = "Guardado ✓";
+  note.textContent = text || "Guardado ✓";
+  note.style.color = isError ? "var(--pink)" : "";
   note.classList.add("show");
   clearTimeout(flashSaveNote._t);
   flashSaveNote._t = setTimeout(() => note.classList.remove("show"), 1400);
@@ -263,6 +291,7 @@ function showTab(id, btn) {
 
 /*SISTEMA HOST — password + painel de administração*/
 let hostUnlocked = false;
+let sessionAuthHash = null; // guarda o hash da password desta sessão, para autenticar os PUT ao /api/menu
 
 function openHostLogin() {
   document.getElementById("hostOverlay").classList.add("open");
@@ -292,6 +321,7 @@ async function attemptHostLogin() {
 
   if (enteredHash === HOST_PASSWORD_HASH) {
     hostUnlocked = true;
+    sessionAuthHash = enteredHash;
     notifyHostAccess();
     closeHostLogin();
     openAdminPanel();
@@ -451,9 +481,9 @@ function addCategory() {
 }
 
 function resetMenuData() {
-  if (!confirm("Isto vai repor o menu original e apagar todas as alterações feitas no Host. Continuar?")) return;
-  localStorage.removeItem(STORAGE_KEY);
-  loadMenuData();
+  if (!confirm("Isto vai repor o menu original para TODOS os visitantes e apagar as alterações feitas no Host. Continuar?")) return;
+  menuData = ensureIds(JSON.parse(JSON.stringify(defaultMenuData)));
+  saveMenuData();
   renderAdminPanel();
   renderTabsAndPanels();
 }
@@ -473,12 +503,13 @@ function exportMenuData() {
 
 function lockHost() {
   hostUnlocked = false;
+  sessionAuthHash = null;
   closeAdminPanel();
 }
 
 /* ---------- arranque ---------- */
-document.addEventListener("DOMContentLoaded", () => {
-  loadMenuData();
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadMenuData();
   renderTabsAndPanels();
 
   const adminBody = document.getElementById("adminPanelBody");
@@ -501,7 +532,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Abre automaticamente o pedido de password se o URL for .../host
-  // (ex: https://princess-garden-menu.vercel.app/host)
   if (isHostRoute()) openHostLogin();
 
   // Proteção extra da logo (bloqueia menu de contexto/long-press mesmo sendo um DIV)
