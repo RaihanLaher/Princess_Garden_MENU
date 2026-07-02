@@ -1,9 +1,4 @@
 /* /api/menu.js — função serverless do Vercel
-   GET  -> devolve o menu atual (público, qualquer visitante pode ler)
-   PUT  -> grava um novo menu (só se vier com a password correta no cabeçalho
-           Authorization, verificada aqui no servidor contra a variável de
-           ambiente HOST_PASSWORD_HASH — nunca fica exposta no código do site)
-
    Variáveis de ambiente necessárias no Vercel (Project Settings -> Environment Variables):
      JSONBIN_ID          -> o ID do "bin" criado em jsonbin.io
      JSONBIN_KEY         -> a "X-Master-Key" (ou "Access Key") da tua conta jsonbin.io
